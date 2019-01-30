@@ -1,6 +1,10 @@
 import React from "react";
 import { NativeRouter, Route } from "react-router-native";
-import Login from './views/Login'
+import { firebaseBasConfig } from "./utils/fireBaseConfig";
+import Login from "./views/Login";
+import * as firebase from "firebase";
+
+firebase.initializeApp(firebaseBasConfig);
 
 export default class App extends React.Component {
   render() {
