@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Input } from "react-native-elements";
 import firebase from "firebase";
+import { Link } from "react-router-native";
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -12,35 +13,20 @@ export default class Login extends React.Component {
     };
   }
 
-  componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        console.log(user);
-      }
-    });
-  }
-
-  signUpUser = (email, password) => {
-    try {
-      if (this.state.password.length < 6) {
-        alert("Please enter at least 6 characters");
-      } else {
-        firebase.auth().createUserWithEmailAndPassword(email, password);
-      }
-    } catch (e) {
-      console.log("Error", e);
-    }
-  };
+  // componentDidMount() {
+  //   firebase.auth().onAuthStateChanged(user => {
+  //     if (user) {
+  //       console.log(user);
+  //     }
+  //   });
+  // }
 
   loginUser = (email, password) => {
-    console.log(email, password);
     try {
       firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
-        .then(user => {
-          console.log(user);
-        });
+        .then(user => {});
     } catch (e) {
       console.log("Error", e);
     }
@@ -56,10 +42,82 @@ export default class Login extends React.Component {
       firebase
         .auth()
         .signInAndRetrieveDataWithCredential(credential)
-        .then(user => {
-          console.log(user);
+        .then(result => {
+          //Some Action will happen here
         })
         .catch(e => console.log(e));
+    }
+  }
+
+  isUserEqual = (googleUser, firebaseUser) => {
+    if (firebaseUser) {
+      let providerData = firebaseUser.providerData;
+      providerData.forEach(item => {
+        if (
+          item.providerId === firebase.auth.GoogleAuthProvider.PROVIDER_ID &&
+          item.uid === googleUser.getBasicProfile().getId()
+        ) {
+          // We don't need to reauth the Firebase connection.
+          return true;
+        }
+      });
+    }
+    return false;
+  };
+
+  onSignIn = googleUser => {
+    // We need to register an Observer on Firebase Auth to make sure auth is initialized.
+    let unsubscribe = firebase.auth().onAuthStateChanged(
+      function(firebaseUser) {
+        unsubscribe();
+        // Check if we are already signed-in Firebase with the correct user.
+        if (!this.isUserEqual(googleUser, firebaseUser)) {
+          // Build Firebase credential with the Google ID token.
+          let credential = firebase.auth.GoogleAuthProvider.credential(
+            googleUser.idToken,
+            googleUser.accessToken
+          );
+          // Sign in with credential from the Google user.
+          firebase
+            .auth()
+            .signInAndRetrieveDataWithCredential(credential)
+            .then(result => console.log("user signed"))
+            .catch(function(error) {
+              // Handle Errors here.
+              let errorCode = error.code;
+              let errorMessage = error.message;
+              // The email of the user's account used.
+              let email = error.email;
+              // The firebase.auth.AuthCredential type that was used.
+              let credential = error.credential;
+              // ...
+            });
+        } else {
+          console.log("User already signed-in Firebase.");
+        }
+      }.bind(this)
+    );
+  };
+
+  static async loginWithGoogle() {
+    try {
+      const result = await Expo.Google.logInAsync({
+        // behavior: "web",
+        androidClientId:
+          "680708776313-b7c3mpfistiteelfeecj5036t2tvdk82.apps.googleusercontent.com",
+        iosClientId:
+          "680708776313-b7c3mpfistiteelfeecj5036t2tvdk82.apps.googleusercontent.com",
+        scopes: ["profile", "email"]
+      });
+
+      if (result.type === "success") {
+        this.onSignIn(result);
+        return result.accessToken;
+      } else {
+        return { cancelled: true };
+      }
+    } catch (e) {
+      return { error: true };
     }
   }
 
@@ -91,13 +149,9 @@ export default class Login extends React.Component {
             marginTop: 10
           }}
         >
-          <Button
-            title="Don't have an account?"
-            type="clear"
-            onPress={() => {
-              this.signUpUser(this.state.email, this.state.password);
-            }}
-          />
+          <Link to="/register">
+            <Text>Dont have an account?</Text>
+          </Link>
         </View>
         <Text>OR</Text>
 
@@ -111,7 +165,11 @@ export default class Login extends React.Component {
           />
         </View>
         <View style={{ width: "100%", marginTop: 10, marginEnd: 10 }}>
-          <Button style={{ width: "100%" }} title="Google" />
+          <Button
+            style={{ width: "100%" }}
+            title="Google"
+            onPress={() => Login.loginWithGoogle()}
+          />
         </View>
       </View>
     );
