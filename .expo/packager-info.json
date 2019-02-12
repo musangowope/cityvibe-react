@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 11800,
+  "expoServerNgrokUrl": "https://9r-daq.anonymous.cityvibe-react.exp.direct",
+  "packagerNgrokUrl": "https://packager.9r-daq.anonymous.cityvibe-react.exp.direct",
+  "ngrokPid": 11890
 }
