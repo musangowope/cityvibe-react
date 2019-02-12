@@ -168,6 +168,7 @@ export default class Login extends React.Component {
           <Button
             style={{ width: "100%" }}
             title="Google"
+            disabled
             onPress={() => Login.loginWithGoogle()}
           />
         </View>
