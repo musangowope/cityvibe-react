@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Input } from "react-native-elements";
 import firebase from "firebase";
-import { Link } from "react-router-native";
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -149,9 +148,11 @@ export default class Login extends React.Component {
             marginTop: 10
           }}
         >
-          <Link to="/register">
+          <Button title="Dont have an account" type="clear" onPress={() => {
+            this.props.navigation.navigate('Register')
+          }}>
             <Text>Dont have an account?</Text>
-          </Link>
+          </Button>
         </View>
         <Text>OR</Text>
 

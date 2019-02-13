@@ -3,7 +3,6 @@ import { Text, Input, ButtonGroup, Button } from "react-native-elements";
 import DatePicker from "react-native-datepicker";
 import isAlphaNumeric from "../../functions/isAlphaNumeric.func";
 import isValidEmail from "../../functions/isValidEmail.func";
-import BackButton from "../../components/BackButton";
 import { View } from "react-native";
 import firebase from "firebase";
 
@@ -231,7 +230,6 @@ class Register extends Component {
           padding: 25
         }}
       >
-        <BackButton />
         <Text>Sign Up</Text>
         <Input
           placeholder="Email Address"

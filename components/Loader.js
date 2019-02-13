@@ -1,12 +1,10 @@
-import React from "react";
+import React from 'react';
 import { StyleSheet, Text, View } from "react-native";
-import LogoutButton from "../../components/temporary-helper-componts/LogoutButton";
 
-const ChooseBarType = () => {
+const Loader = () => {
   return (
     <View style={styles.container}>
-      <Text>Choose Bar Type</Text>
-      <LogoutButton />
+      <Text>Loading</Text>
     </View>
   );
 };
@@ -21,4 +19,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ChooseBarType;
+
+export default Loader;
