@@ -2,15 +2,41 @@ import React, { Component } from "react";
 import { Platform, View } from "react-native";
 import { Text, Input } from "react-native-elements";
 import { Constants, Location, Permissions } from "expo";
+import { getNearMeUrl } from "../../functions/retrieveGooglePlaceUrls";
+import axios from "axios";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       location: null,
-      errorMessage: null
+      errorMessage: null,
+      places: []
     };
   }
+
+  componentDidUpdate() {
+    if (this.state.location) {
+      this.getPlacesNearYou();
+    }
+  }
+
+  getPlacesNearYou = () => {
+    const { navigation } = this.props;
+    const {
+      location: {
+        coords: { latitude: lat, longitude: long }
+      }
+    } = this.state;
+    axios
+      .get(getNearMeUrl(lat, long, navigation.getParam("placeType", null)))
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(e => {
+        console.log('Oh no, there was some error', e)
+      });
+  };
 
   componentWillMount() {
     if (Platform.OS === "android" && !Constants.isDevice) {
@@ -61,7 +87,7 @@ class Dashboard extends Component {
         }}
       >
         <Text>The dashboard. The bar type is {placeType}</Text>
-        <Text>Location, {text}</Text>
+
         <Input placeholder="search for pub, club or restaurant" />
       </View>
     );

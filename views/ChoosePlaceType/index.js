@@ -15,10 +15,10 @@ class ChoosePlaceType extends React.Component {
           <Text style={styles.text}>Pub</Text>
           <Button
             style={{ width: "100%" }}
-            title="Drink at a pub"
+            title="Drink at a Bar"
             onPress={() => {
               this.props.navigation.navigate("Dashboard", {
-                placeType: "pub"
+                placeType: "bar"
               });
             }}
           />
