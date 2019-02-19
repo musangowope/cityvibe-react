@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Platform, View } from "react-native";
 import { Text, Input } from "react-native-elements";
 import { Constants, Location, Permissions } from "expo";
+import { Card, ListItem, Button, Icon } from "react-native-elements";
+
 import { getNearMeUrl } from "../../functions/retrieveGooglePlaceUrls";
 import axios from "axios";
 
@@ -11,30 +13,57 @@ class Dashboard extends Component {
     this.state = {
       location: null,
       errorMessage: null,
-      places: []
+      places: [],
+      isLoadingPlaces: false
     };
   }
 
-  componentDidUpdate() {
-    if (this.state.location) {
-      this.getPlacesNearYou();
-    }
+  componentDidMount() {
+    this.getPlacesNearYou();
   }
 
+  /*Recfactor for expo*/
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (this.state.location && this.state.location !== prevState.location) {
+  //     this.getPlacesNearYou();
+  //   }
+  // }
+
   getPlacesNearYou = () => {
+    this.setState({
+      isLoadingPlaces: true
+    });
+
     const { navigation } = this.props;
-    const {
-      location: {
-        coords: { latitude: lat, longitude: long }
-      }
-    } = this.state;
+    // const {
+    //   location: {
+    //     coords: { latitude: lat, longitude: long }
+    //   }
+    // } = this.state;
+
+    //Fix coordinates for now
+    const lat = "-33.9650608";
+    const long = "18.4580094";
+
     axios
       .get(getNearMeUrl(lat, long, navigation.getParam("placeType", null)))
       .then(res => {
-        console.log(res.data)
+        const {
+          data: { results: places }
+        } = res;
+
+        this.setState(
+          {
+            isLoadingPlaces: false,
+            places
+          },
+          () => {
+            console.log(this.state.places);
+          }
+        );
       })
       .catch(e => {
-        console.log('Oh no, there was some error', e)
+        console.log("Oh no, there was some error", e);
       });
   };
 
@@ -67,13 +96,13 @@ class Dashboard extends Component {
       "placeType",
       "No place type selected"
     );
-
-    let text = "Waiting..";
-    if (this.state.errorMessage) {
-      text = this.state.errorMessage;
-    } else if (this.state.location) {
-      text = JSON.stringify(this.state.location);
-    }
+    //
+    // let text = "Accessing GPS Location..";
+    // if (this.state.errorMessage) {
+    //   text = this.state.errorMessage;
+    // } else if (this.state.location) {
+    //   text = JSON.stringify(this.state.location);
+    // }
 
     return (
       <View
@@ -87,8 +116,28 @@ class Dashboard extends Component {
         }}
       >
         <Text>The dashboard. The bar type is {placeType}</Text>
+        {/*<Text>{text}</Text>*/}
 
-        <Input placeholder="search for pub, club or restaurant" />
+        {/*<Input placeholder="search for pub, club or restaurant" />*/}
+
+        {this.state.isLoadingPlaces && <Text>Loading places</Text>}
+
+        <Card title="HELLO WORLD" image={`https://www.fillmurray.com/640/360`}>
+          <Text style={{ marginBottom: 10 }}>
+            The idea with React Native Elements is more about component
+            structure than actual design.
+          </Text>
+          <Button
+            backgroundColor="#03A9F4"
+            buttonStyle={{
+              borderRadius: 0,
+              marginLeft: 0,
+              marginRight: 0,
+              marginBottom: 0
+            }}
+            title="VIEW NOW"
+          />
+        </Card>
       </View>
     );
   }
