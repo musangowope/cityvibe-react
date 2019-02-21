@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Slick from "react-native-slick";
 import { Button } from "react-native-elements";
+import LogoutButton from "../../components/temporary-helper-componts/LogoutButton";
 
 class ChoosePlaceType extends React.Component {
   constructor(props) {
@@ -10,44 +11,47 @@ class ChoosePlaceType extends React.Component {
 
   render() {
     return (
-      <Slick style={styles.wrapper} showsButtons={true}>
-        <View style={styles.slide1}>
-          <Text style={styles.text}>Pub</Text>
-          <Button
-            style={{ width: "100%" }}
-            title="Drink at a Bar"
-            onPress={() => {
-              this.props.navigation.navigate("Dashboard", {
-                placeType: "bar"
-              });
-            }}
-          />
-        </View>
-        <View style={styles.slide2}>
-          <Text style={styles.text}>Club</Text>
-          <Button
-            style={{ width: "100%" }}
-            title="Party at a club"
-            onPress={() => {
-              this.props.navigation.navigate("Dashboard", {
-                placeType: "club"
-              });
-            }}
-          />
-        </View>
-        <View style={styles.slide3}>
-          <Text style={styles.text}>Restaurant</Text>
-          <Button
-            style={{ width: "100%" }}
-            title="Eat at a restaurant"
-            onPress={() => {
-              this.props.navigation.navigate("Dashboard", {
-                placeType: "restaurant"
-              });
-            }}
-          />
-        </View>
-      </Slick>
+      <View>
+        <LogoutButton/>
+        {/*<Slick style={styles.wrapper} showsButtons={true}>*/}
+          {/*<View style={styles.slide1}>*/}
+            {/*<Text style={styles.text}>Pub</Text>*/}
+            {/*<Button*/}
+              {/*style={{ width: "100%" }}*/}
+              {/*title="Drink at a Bar"*/}
+              {/*onPress={() => {*/}
+                {/*this.props.navigation.navigate("Dashboard", {*/}
+                  {/*placeType: "bar"*/}
+                {/*});*/}
+              {/*}}*/}
+            {/*/>*/}
+          {/*</View>*/}
+          {/*<View style={styles.slide2}>*/}
+            {/*<Text style={styles.text}>Club</Text>*/}
+            {/*<Button*/}
+              {/*style={{ width: "100%" }}*/}
+              {/*title="Party at a club"*/}
+              {/*onPress={() => {*/}
+                {/*this.props.navigation.navigate("Dashboard", {*/}
+                  {/*placeType: "club"*/}
+                {/*});*/}
+              {/*}}*/}
+            {/*/>*/}
+          {/*</View>*/}
+          {/*<View style={styles.slide3}>*/}
+            {/*<Text style={styles.text}>Restaurant</Text>*/}
+            {/*<Button*/}
+              {/*style={{ width: "100%" }}*/}
+              {/*title="Eat at a restaurant"*/}
+              {/*onPress={() => {*/}
+                {/*this.props.navigation.navigate("Dashboard", {*/}
+                  {/*placeType: "restaurant"*/}
+                {/*});*/}
+              {/*}}*/}
+            {/*/>*/}
+          {/*</View>*/}
+        {/*</Slick>*/}
+      </View>
     );
   }
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import { NativeRouter, Route, Switch } from "react-router-native";
 import { firebaseBasConfig } from "./utils/fireBaseConfig";
 import LoginRoutes from "./LoginRoutes";
 import AuthenticatedRoutes from "./AuthenticatedRoutes";

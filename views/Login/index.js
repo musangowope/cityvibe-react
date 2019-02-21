@@ -1,8 +1,8 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
-import { Button, Input } from "react-native-elements";
+import { View, Image } from "react-native";
+import { Button, Input, Text } from "react-native-elements";
 import firebase from "firebase";
-import LoginBg from "../../assets/homepage-backdrop.svg";
+import LoginBg from "../../assets/homepage-bg.png";
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -12,6 +12,12 @@ export default class Login extends React.Component {
       password: ""
     };
   }
+
+  static navigationOptions = {
+    headerStyle: {
+      display: "none"
+    }
+  };
 
   // componentDidMount() {
   //   firebase.auth().onAuthStateChanged(user => {
@@ -123,74 +129,119 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>CityVibe</Text>
-        <Input
-          placeholder="Email Address"
-          onChangeText={email => this.setState({ email })}
+      <View
+        style={{
+          backgroundColor: "#fff",
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative"
+        }}
+      >
+        <View
+          style={{
+            position: "absolute",
+            backgroundColor: "#FF0F5F",
+            width: "100%",
+            height: "100%"
+          }}
         />
-        <Input
-          placeholder="Password"
-          onChangeText={password => this.setState({ password })}
+
+        <Image
+          source={LoginBg}
+          style={{ width: "100%", height: "100%", position: "absolute" }}
         />
-        <View style={{ width: "100%", marginTop: 10, marginEnd: 10 }}>
-          <Button
-            style={{ width: "100%" }}
-            title="Login"
-            onPress={() => {
-              this.loginUser(this.state.email, this.state.password);
-            }}
-          />
-        </View>
+
         <View
           style={{
             width: "100%",
-            marginBottom: 10,
-            marginTop: 10
+            height: "100%",
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 999
           }}
         >
-          <Button
-            title="Dont have an account"
-            type="clear"
-            onPress={() => {
-              this.props.navigation.navigate("Register");
+          <Text style={{ color: "white", textTransform: "uppercase" }} h1>
+            CITY VIBE
+          </Text>
+          <Input
+            label="EMAIL ADDRESS"
+            onChangeText={email => this.setState({ email })}
+            containerStyle={{
+              marginTop: 10,
+              marginBottom: 10
+            }}
+            inputStyle={{
+              backgroundColor: "rgba(165, 199, 247, 0.8)",
+              padding: 10,
+            }}
+            labelStyle={{
+              color: '#fff'
+            }}
+          />
+          <Input
+            label="PASSWORD"
+            onChangeText={password => this.setState({ password })}
+            containerStyle={{
+              marginTop: 10,
+              marginBottom: 10
+            }}
+            inputStyle={{
+              backgroundColor: "rgba(165, 199, 247, 0.8)",
+              padding: 10,
+            }}
+            labelStyle={{
+              color: '#fff'
+            }}
+          />
+          <View style={{ width: "100%", marginTop: 10, marginEnd: 10 }}>
+            <Button
+              style={{ width: "100%" }}
+              title="Login"
+              onPress={() => {
+                this.loginUser(this.state.email, this.state.password);
+              }}
+            />
+          </View>
+          <View
+            style={{
+              width: "100%",
+              marginBottom: 10,
+              marginTop: 10
             }}
           >
-            <Text>Dont have an account?</Text>
-          </Button>
-        </View>
-        <Text>OR</Text>
+            <Button
+              title="Dont have an account"
+              type="clear"
+              onPress={() => {
+                this.props.navigation.navigate("Register");
+              }}
+            >
+              <Text>Dont have an account?</Text>
+            </Button>
+          </View>
+          <Text>OR</Text>
 
-        <View style={{ width: "100%", marginTop: 10, marginEnd: 10 }}>
-          <Button
-            style={{ width: "100%" }}
-            title="Facebook"
-            onPress={() => {
-              this.loginWithFacebook();
-            }}
-          />
-        </View>
-        <View style={{ width: "100%", marginTop: 10, marginEnd: 10 }}>
-          <Button
-            style={{ width: "100%" }}
-            title="Google"
-            disabled
-            onPress={() => Login.loginWithGoogle()}
-          />
+          <View style={{ width: "100%", marginTop: 10, marginEnd: 10 }}>
+            <Button
+              style={{ width: "100%" }}
+              title="Facebook"
+              onPress={() => {
+                this.loginWithFacebook();
+              }}
+            />
+          </View>
+          <View style={{ width: "100%", marginTop: 10, marginEnd: 10 }}>
+            <Button
+              style={{ width: "100%" }}
+              title="Google"
+              disabled
+              onPress={() => Login.loginWithGoogle()}
+            />
+          </View>
         </View>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 25,
-    backgroundColor: "#fff",
-    // backgroundImage
-    alignItems: "center",
-    justifyContent: "center",
-    position: "relative"
-  }
-});
