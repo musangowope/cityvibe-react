@@ -1,7 +1,8 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import { Button, Input } from "react-native-elements";
 import firebase from "firebase";
+import LoginBg from "../../assets/homepage-backdrop.svg";
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -148,9 +149,13 @@ export default class Login extends React.Component {
             marginTop: 10
           }}
         >
-          <Button title="Dont have an account" type="clear" onPress={() => {
-            this.props.navigation.navigate('Register')
-          }}>
+          <Button
+            title="Dont have an account"
+            type="clear"
+            onPress={() => {
+              this.props.navigation.navigate("Register");
+            }}
+          >
             <Text>Dont have an account?</Text>
           </Button>
         </View>
@@ -183,7 +188,9 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 25,
     backgroundColor: "#fff",
+    // backgroundImage
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    position: "relative"
   }
 });
