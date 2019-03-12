@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Image } from "react-native";
-import { Button, Input, Text } from "react-native-elements";
+import { View, Image, Text } from "react-native";
+import { Button, Input, Icon } from "react-native-elements";
 import firebase from "firebase";
+import { LinearGradient, Font } from "expo";
 import LoginBg from "../../assets/homepage-bg.png";
 
 export default class Login extends React.Component {
@@ -9,7 +10,8 @@ export default class Login extends React.Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      fontLoaded: false
     };
   }
 
@@ -18,6 +20,17 @@ export default class Login extends React.Component {
       display: "none"
     }
   };
+
+  loadAssetAsync = async () => {
+    await Font.loadAsync({
+      "open-sans-condensed-bold": require("../../assets/fonts/OpenSansCondensed-Bold.ttf")
+    });
+    this.setState({ fontLoaded: true });
+  };
+
+  componentDidMount() {
+    this.loadAssetAsync();
+  }
 
   // componentDidMount() {
   //   firebase.auth().onAuthStateChanged(user => {
@@ -128,6 +141,12 @@ export default class Login extends React.Component {
   }
 
   render() {
+    const openSansCondensedBoldStyle = () => {
+      return this.state.fontLoaded
+        ? { fontFamily: "open-sans-condensed-bold" }
+        : {};
+    };
+
     return (
       <View
         style={{
@@ -152,6 +171,18 @@ export default class Login extends React.Component {
           style={{ width: "100%", height: "100%", position: "absolute" }}
         />
 
+        <LinearGradient
+          colors={["transparent", "#FF7CC4"]}
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 0,
+            height: "100%",
+            width: "100%"
+          }}
+        />
+
         <View
           style={{
             width: "100%",
@@ -159,46 +190,93 @@ export default class Login extends React.Component {
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
-            zIndex: 999
+            zIndex: 999,
+            padding: 20
           }}
         >
-          <Text style={{ color: "white", textTransform: "uppercase" }} h1>
+          <Text
+            style={{
+              color: "white",
+              textTransform: "uppercase",
+              fontSize: 50,
+              ...openSansCondensedBoldStyle()
+            }}
+          >
             CITY VIBE
           </Text>
-          <Input
-            label="EMAIL ADDRESS"
-            onChangeText={email => this.setState({ email })}
-            containerStyle={{
-              marginTop: 10,
-              marginBottom: 10
-            }}
-            inputStyle={{
-              backgroundColor: "rgba(165, 199, 247, 0.8)",
-              padding: 10,
-            }}
-            labelStyle={{
-              color: '#fff'
-            }}
-          />
-          <Input
-            label="PASSWORD"
-            onChangeText={password => this.setState({ password })}
-            containerStyle={{
-              marginTop: 10,
-              marginBottom: 10
-            }}
-            inputStyle={{
-              backgroundColor: "rgba(165, 199, 247, 0.8)",
-              padding: 10,
-            }}
-            labelStyle={{
-              color: '#fff'
-            }}
-          />
-          <View style={{ width: "100%", marginTop: 10, marginEnd: 10 }}>
+
+          <View style={{ width: "100%", marginTop: 10, marginBottom: 10 }}>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 16,
+                ...openSansCondensedBoldStyle()
+              }}
+            >
+              EMAIL
+            </Text>
+            <Input
+              onChangeText={email => this.setState({ email })}
+              value={this.state.email.toLowerCase()}
+              containerStyle={{
+                marginTop: 10,
+                marginBottom: 10
+              }}
+              inputStyle={{
+                backgroundColor: "rgba(165, 199, 247, 0.8)",
+                padding: 10,
+                height: 60,
+                color: "#fff"
+              }}
+            />
+          </View>
+
+          <View style={{ width: "100%", marginTop: 10, marginBottom: 10 }}>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 16,
+                ...openSansCondensedBoldStyle()
+              }}
+            >
+              PASSWORD
+            </Text>
+
+            <Input
+              onChangeText={password => this.setState({ password })}
+              value={this.state.password.toLowerCase()}
+              containerStyle={{
+                marginTop: 10,
+                marginBottom: 10
+              }}
+              inputStyle={{
+                backgroundColor: "rgba(165, 199, 247, 0.8)",
+                padding: 10,
+                height: 60,
+                color: "#fff",
+                ...openSansCondensedBoldStyle()
+              }}
+              labelStyle={{
+                color: "#fff",
+                ...openSansCondensedBoldStyle()
+              }}
+            />
+          </View>
+
+          <View style={{ width: "100%", marginTop: 10, marginBottom: 10 }}>
             <Button
-              style={{ width: "100%" }}
-              title="Login"
+              type="solid"
+              buttonStyle={{
+                backgroundColor: "#FF7CC4",
+                marginLeft: 10,
+                marginRight: 10,
+                borderRadius: 0,
+                height: 60
+              }}
+              title="LOGIN"
+              titleStyle={{
+                ...openSansCondensedBoldStyle()
+              }}
               onPress={() => {
                 this.loginUser(this.state.email, this.state.password);
               }}
@@ -208,36 +286,63 @@ export default class Login extends React.Component {
             style={{
               width: "100%",
               marginBottom: 10,
-              marginTop: 10
+              position: "relative",
+              justifyContent: "flex-end"
             }}
           >
             <Button
-              title="Dont have an account"
+              title="DON'T HAVE AN ACCOUNT?"
+              containerStyle={{
+                position: "relative"
+              }}
+              titleStyle={{
+                color: "#fff",
+                position: "absolute",
+                left: 5,
+                ...openSansCondensedBoldStyle()
+              }}
               type="clear"
               onPress={() => {
                 this.props.navigation.navigate("Register");
               }}
-            >
-              <Text>Dont have an account?</Text>
-            </Button>
-          </View>
-          <Text>OR</Text>
-
-          <View style={{ width: "100%", marginTop: 10, marginEnd: 10 }}>
-            <Button
-              style={{ width: "100%" }}
-              title="Facebook"
-              onPress={() => {
-                this.loginWithFacebook();
-              }}
             />
           </View>
-          <View style={{ width: "100%", marginTop: 10, marginEnd: 10 }}>
-            <Button
-              style={{ width: "100%" }}
-              title="Google"
-              disabled
-              onPress={() => Login.loginWithGoogle()}
+
+          <Text
+            style={{
+              color: "white",
+              textTransform: "uppercase",
+              ...openSansCondensedBoldStyle()
+            }}
+          >
+            OR
+          </Text>
+
+          <View
+            style={{
+              width: "100%",
+              marginTop: 10,
+              marginBottom: 10,
+              flexDirection: "row",
+              justifyContent: "center"
+            }}
+          >
+            <Icon
+              raised
+              name="facebook-square"
+              type="font-awesome"
+              color="#5245AE"
+              reverse
+              onPress={() => console.log("hello")}
+            />
+
+            <Icon
+              raised
+              name="google"
+              type="font-awesome"
+              color="#F73A39"
+              reverse
+              onPress={() => console.log("hello")}
             />
           </View>
         </View>
