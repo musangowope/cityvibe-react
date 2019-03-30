@@ -1,18 +1,17 @@
 import React from "react";
 import { firebaseBasConfig } from "./utils/fireBaseConfig";
-import LoginRoutes from "./LoginRoutes";
-import AuthenticatedRoutes from "./AuthenticatedRoutes";
-import ChooseBarType from "./views/ChoosePlaceType";
+import LoginRoutes from "./views/LoginRoutes/LoginRoutes";
+import AuthenticatedRoutes from "./views/AuthenticatedRoutes/AuthenticatedRoutes";
 
-import LoadingPage from "./components/Loader";
+import LoadingPage from "./vendor/Loader";
 
 import * as firebase from "firebase";
 
 firebase.initializeApp(firebaseBasConfig);
 
 export default class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       loading: true,
       authenticated: false
@@ -22,7 +21,6 @@ export default class App extends React.Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        // console.log(user);
         this.setState({ loading: false, authenticated: true });
       } else {
         this.setState({ loading: false, authenticated: false });

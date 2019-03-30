@@ -3,7 +3,9 @@ import { View, Image, Text } from "react-native";
 import { Button, Input, Icon } from "react-native-elements";
 import firebase from "firebase";
 import { LinearGradient, Font } from "expo";
-import LoginBg from "../../assets/homepage-bg.png";
+import FontText from "../../../vendor/FontText";
+import LoginBg from "../../../assets/homepage-bg.png";
+import colors from "../../../constants/colors";
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -23,7 +25,7 @@ export default class Login extends React.Component {
 
   loadAssetAsync = async () => {
     await Font.loadAsync({
-      "open-sans-condensed-bold": require("../../assets/fonts/OpenSansCondensed-Bold.ttf")
+      "open-sans-condensed-bold": require("../../../assets/fonts/OpenSansCondensed-Bold.ttf")
     });
     this.setState({ fontLoaded: true });
   };
@@ -150,7 +152,7 @@ export default class Login extends React.Component {
     return (
       <View
         style={{
-          backgroundColor: "#fff",
+          backgroundColor: colors.white,
           flex: 1,
           alignItems: "center",
           justifyContent: "center",
@@ -160,7 +162,7 @@ export default class Login extends React.Component {
         <View
           style={{
             position: "absolute",
-            backgroundColor: "#FF0F5F",
+            backgroundColor: colors.hotpink,
             width: "100%",
             height: "100%"
           }}
@@ -172,7 +174,7 @@ export default class Login extends React.Component {
         />
 
         <LinearGradient
-          colors={["transparent", "#FF7CC4"]}
+          colors={["transparent", colors.lightpink]}
           style={{
             position: "absolute",
             left: 0,
@@ -194,27 +196,23 @@ export default class Login extends React.Component {
             padding: 20
           }}
         >
-          <Text
-            style={{
+          <FontText
+            text="CITY VIBE"
+            textStyle={{
               color: "white",
-              textTransform: "uppercase",
-              fontSize: 50,
-              ...openSansCondensedBoldStyle()
+              fontSize: 50
             }}
-          >
-            CITY VIBE
-          </Text>
+          />
 
           <View style={{ width: "100%", marginTop: 10, marginBottom: 10 }}>
-            <Text
-              style={{
+            <FontText
+              text="EMAIL"
+              fontWeight="bold"
+              textStyle={{
                 color: "white",
-                fontSize: 16,
-                ...openSansCondensedBoldStyle()
+                fontSize: 16
               }}
-            >
-              EMAIL
-            </Text>
+            />
             <Input
               onChangeText={email => this.setState({ email })}
               value={this.state.email.toLowerCase()}
@@ -226,21 +224,20 @@ export default class Login extends React.Component {
                 backgroundColor: "rgba(165, 199, 247, 0.8)",
                 padding: 10,
                 height: 60,
-                color: "#fff"
+                color: colors.white
               }}
             />
           </View>
 
           <View style={{ width: "100%", marginTop: 10, marginBottom: 10 }}>
-            <Text
-              style={{
+            <FontText
+              text="PASSWORD"
+              fontWeight="bold"
+              textStyle={{
                 color: "white",
-                fontSize: 16,
-                ...openSansCondensedBoldStyle()
+                fontSize: 16
               }}
-            >
-              PASSWORD
-            </Text>
+            />
 
             <Input
               onChangeText={password => this.setState({ password })}
@@ -253,11 +250,11 @@ export default class Login extends React.Component {
                 backgroundColor: "rgba(165, 199, 247, 0.8)",
                 padding: 10,
                 height: 60,
-                color: "#fff",
+                color: colors.white,
                 ...openSansCondensedBoldStyle()
               }}
               labelStyle={{
-                color: "#fff",
+                color: colors.white,
                 ...openSansCondensedBoldStyle()
               }}
             />
@@ -267,7 +264,7 @@ export default class Login extends React.Component {
             <Button
               type="solid"
               buttonStyle={{
-                backgroundColor: "#FF7CC4",
+                backgroundColor: colors.lightpink,
                 marginLeft: 10,
                 marginRight: 10,
                 borderRadius: 0,
@@ -296,7 +293,7 @@ export default class Login extends React.Component {
                 position: "relative"
               }}
               titleStyle={{
-                color: "#fff",
+                color: colors.white,
                 position: "absolute",
                 left: 5,
                 ...openSansCondensedBoldStyle()
@@ -308,15 +305,14 @@ export default class Login extends React.Component {
             />
           </View>
 
-          <Text
-            style={{
+          <FontText
+            text="OR"
+            fontWeight="bold"
+            textStyle={{
               color: "white",
-              textTransform: "uppercase",
-              ...openSansCondensedBoldStyle()
+              fontSize: 16
             }}
-          >
-            OR
-          </Text>
+          />
 
           <View
             style={{
@@ -333,7 +329,7 @@ export default class Login extends React.Component {
               type="font-awesome"
               color="#5245AE"
               reverse
-              onPress={() => console.log("hello")}
+              onPress={() => this.loginWithFacebook()}
             />
 
             <Icon

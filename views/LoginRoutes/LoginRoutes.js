@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator, createAppContainer } from "react-navigation";
-import Login from "./views/Login";
-import Register from "./views/Register";
+import Login from "./Login";
+import Register from "./Register";
 
 const LoginRoutes = createStackNavigator({
   Login: { screen: Login },

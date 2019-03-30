@@ -1,10 +1,8 @@
 import React from "react";
 import { createStackNavigator, createAppContainer } from "react-navigation";
-import ChooseBarType from "./views/ChoosePlaceType";
-import Dashboard from "./views/Dashboard";
+import Explore from "./Explore";
 
 const AuthenticatedRoutes = createStackNavigator({
-  ChooseBarType: { screen: ChooseBarType },
-  Dashboard: { screen: Dashboard }
+  Explore: { screen: Explore },
 });
 export default createAppContainer(AuthenticatedRoutes);
