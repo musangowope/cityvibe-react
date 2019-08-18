@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "react-native-elements";
+import { Button } from "react-native-elements/src/index";
 import firebase from "firebase";
 
 const LogoutButton = () => {

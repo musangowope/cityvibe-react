@@ -3,9 +3,9 @@ import Image from "react-native-remote-svg";
 import { View, Text } from "react-native";
 import PropTypes from "prop-types";
 import OccupancyBarGraph from "./OccupancyBarGraph";
-import FontText from "../../../../../vendor/FontText";
-import FontButton from "../../../../../vendor/FontButton";
-import images from "../../../../../constants/image-constants";
+import FontText from "../FontText";
+import FontButton from "../FontButton";
+import images from "../../constants/image-constants";
 
 const ResultCard = ({
   placeTitle,

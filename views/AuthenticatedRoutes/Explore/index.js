@@ -1,16 +1,16 @@
 import React, { Component, Fragment } from "react";
-import { Platform, View, ImageBackground } from "react-native";
+import { Platform, View, ScrollView } from "react-native";
 import Image from "react-native-remote-svg";
 import { Constants, Location, Permissions } from "expo";
 import axios from "axios";
 import { Button } from "react-native-elements";
-import DashboardNav from "./components/DashboardNav";
-import ResultCard from "./components/ResultCard";
-import FontText from "../../../vendor/FontText";
-import LogoutButton from "../../../vendor/temporary-helper-componts/LogoutButton";
+import ResultCard from "../../../SharedComponents/ResultCard";
+import FontText from "../../../SharedComponents/FontText";
+import LogoutButton from "../../../SharedComponents/LogoutButton";
+import DashboardNav from "../../../SharedComponents/DashboardNav";
 import { getNearMeUrl } from "../../../functions/retrieveGooglePlaceUrls";
 import images from "../../../constants/image-constants";
-import ImageButton from "../../../vendor/ImageButton";
+import ImageButton from "../../../SharedComponents/ImageButton";
 
 class Explore extends Component {
   static navigationOptions = {
@@ -115,95 +115,77 @@ class Explore extends Component {
     return (
       <Fragment>
         <DashboardNav />
-
-        <View
-          style={{
-            marginLeft: 5
-          }}
-        >
-          <FontText
-            text="Explore"
-            fontWeight="bold"
-            textStyle={{
-              fontSize: 32
+        <ScrollView>
+          <View
+            style={{
+              marginLeft: 5
             }}
-          />
-        </View>
+          >
+            <FontText
+              text="Explore"
+              fontWeight="bold"
+              textStyle={{
+                fontSize: 32
+              }}
+            />
+          </View>
 
-        <View
-          style={{
-            flexWrap: "wrap",
-            flexFlow: "row",
-            flexDirection: "row"
-          }}
-        >
-          <ImageButton
-            bgImageUrl={images.categories.barBg}
-            buttonIconUrl={images.icons.barImage}
-            iconText="Bar"
-            fontWeight="light"
-            containerStyle={{
-              flexBasis: "50%",
-              padding: 5
+          <View
+            style={{
+              flexWrap: "wrap",
+              flexFlow: "row",
+              flexDirection: "row"
             }}
-          />
+          >
+            <ImageButton
+              bgImageUrl={images.categories.barBg}
+              buttonIconUrl={images.icons.barImage}
+              iconText="Bar"
+              fontWeight="light"
+              containerStyle={{
+                flexBasis: "50%",
+                padding: 5
+              }}
+            />
 
-          <ImageButton
-            bgImageUrl={images.categories.cafeBg}
-            buttonIconUrl={images.icons.cafeImage}
-            iconText="Cafe"
-            fontWeight="light"
-            containerStyle={{
-              flexBasis: "50%",
-              padding: 5
-            }}
-          />
+            <ImageButton
+              bgImageUrl={images.categories.cafeBg}
+              buttonIconUrl={images.icons.cafeImage}
+              iconText="Cafe"
+              fontWeight="light"
+              containerStyle={{
+                flexBasis: "50%",
+                padding: 5
+              }}
+            />
 
-          <ImageButton
-            bgImageUrl={images.categories.restaurantBg}
-            buttonIconUrl={images.icons.restaurantImage}
-            iconText="Restaurant"
-            fontWeight="light"
-            containerStyle={{
-              flexBasis: "50%",
-              padding: 5
-            }}
-          />
+            <ImageButton
+              bgImageUrl={images.categories.restaurantBg}
+              buttonIconUrl={images.icons.restaurantImage}
+              iconText="Restaurant"
+              fontWeight="light"
+              containerStyle={{
+                flexBasis: "50%",
+                padding: 5
+              }}
+            />
 
-          <ImageButton
-            bgImageUrl={images.categories.nightClubBg}
-            buttonIconUrl={images.icons.clubImage}
-            iconText="Night Club"
-            fontWeight="light"
-            containerStyle={{
-              flexBasis: "50%",
-              padding: 5
-            }}
-          />
-        </View>
+            <ImageButton
+              bgImageUrl={images.categories.nightClubBg}
+              buttonIconUrl={images.icons.clubImage}
+              iconText="Night Club"
+              fontWeight="light"
+              containerStyle={{
+                flexBasis: "50%",
+                padding: 5
+              }}
+            />
+          </View>
 
-        <ResultCard />
+          <ResultCard />
 
-        <LogoutButton />
-
-        {/*{this.state.isLoadingPlaces && <Text>Loading places</Text>}*/}
-
-        {/*<Card title="HELLO WORLD" image={`https://www.fillmurray.com/640/360`}>*/}
-        {/*<Text style={{ marginBottom: 10 }}>*/}
-        {/*The idea with React Native Elements is more about component*/}
-        {/*structure than actual design.*/}
-        {/*</Text>*/}
-        {/*<Button*/}
-        {/*backgroundColor="#03A9F4"*/}
-        {/*buttonStyle={{*/}
-        {/*borderRadius: 0,*/}
-        {/*marginLeft: 0,*/}
-        {/*marginRight: 0,*/}
-        {/*marginBottom: 0*/}
-        {/*}}*/}
-        {/*title="VIEW NOW"*/}
-        {/*/>*/}
-        {/*</Card>*/}
+          <LogoutButton />
+        </ScrollView>
       </Fragment>
     );
   }

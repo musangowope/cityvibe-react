@@ -3,7 +3,7 @@ import { View, Image, Text } from "react-native";
 import { Button, Input, Icon } from "react-native-elements";
 import firebase from "firebase";
 import { LinearGradient, Font } from "expo";
-import FontText from "../../../vendor/FontText";
+import FontText from "../../../SharedComponents/FontText";
 import LoginBg from "../../../assets/homepage-bg.png";
 import colors from "../../../constants/colors";
 

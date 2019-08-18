@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { View } from "react-native";
 import PropTypes from "prop-types";
-import FontText from "../../../../../vendor/FontText";
+import FontText from "../FontText";
 
 const OccupancyBarGraph = ({ percentage }) => {
   const percentageText = `${percentage}%`;

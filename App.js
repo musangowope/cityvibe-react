@@ -1,39 +1,39 @@
-import React from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { firebaseBasConfig } from "./utils/fireBaseConfig";
 import LoginRoutes from "./views/LoginRoutes/LoginRoutes";
 import AuthenticatedRoutes from "./views/AuthenticatedRoutes/AuthenticatedRoutes";
 
-import LoadingPage from "./vendor/Loader";
+import LoadingPage from "./SharedComponents/Loader";
 
 import * as firebase from "firebase";
 
 firebase.initializeApp(firebaseBasConfig);
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-      authenticated: false
-    };
-  }
+const App = () => {
+  const [isAuthenticated, setAuthenticationState] = useState(false);
+  const [loading, setLoadingState] = useState(true);
 
-  componentDidMount() {
+  useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.setState({ loading: false, authenticated: true });
+        setLoadingState(false);
+        setAuthenticationState(true);
       } else {
-        this.setState({ loading: false, authenticated: false });
+        setLoadingState(false);
+        setAuthenticationState(false);
       }
     });
-  }
+  }, []);
 
-  render() {
-    if (this.state.loading) return <LoadingPage />;
-    if (!this.state.authenticated) {
+  const getRoute = () => {
+    if (loading) return <LoadingPage />;
+    if (!isAuthenticated) {
       return <LoginRoutes />;
     }
-
     return <AuthenticatedRoutes />;
-  }
-}
+  };
+
+  return <Fragment>{getRoute()}</Fragment>;
+};
+
+export default App;

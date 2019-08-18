@@ -1,0 +1,2 @@
+export const SEARCH_PLACES = "SEARCH_PLACES";
+export const GET_PLACE_DETAILS = "SEARCH_PLACES";
