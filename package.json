@@ -21,6 +21,7 @@
     "react-native-linear-gradient": "^2.5.3",
     "react-native-pose": "^0.9.0",
     "react-native-remote-svg": "^1.4.4",
+    "react-native-searchable-dropdown": "^1.1.1",
     "react-native-slick": "^1.0.2",
     "react-native-webview": "^5.4.6",
     "react-navigation": "^3.2.1",
